@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      AWS_ACCESS-KEY-ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       TF_VAR_region: ${{ secrets.TF_VAR_REGION }}
       TF_VAR_iam_user_name: ${{ secrets.TF_VAR_IAM_USER_NAME }}
@@ -23,23 +23,23 @@ jobs:
         working-directory: ./terraform
 
     steps:
-      -name: Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      -name: Terraform Setup
+      - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
     
-      -name: Terraform Format
+      - name: Terraform Format
         run: terraform fmt -check
 
-      -name: Terraform Init
+      - name: Terraform Init
         run: terraform init
 
-      -name: Terraform Validate
+      - name: Terraform Validate
         run: terraform validate
 
-      -name: Terraform Plan
+      - name: Terraform Plan
         run: terraform plan
 
-      -name: Terraform Apply
+      - name: Terraform Apply
         run: terraform apply -auto-approve
