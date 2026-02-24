@@ -4,3 +4,7 @@ bucket_name   = "terraform-state-bucket-gvil"
 table_name    = "terraform_state_locks"
 root_domain   = "giovcloud.xyz"
 dns_record_ttl = 300
+website_bucket = "giovcloud.xyz"
+force_destroy = true
+index_document = "index.html"
+versioning_enabled = "Enabled"
