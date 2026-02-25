@@ -1,4 +1,4 @@
- /*terraform {
+terraform {
  backend "s3" {
     bucket         = "terraform-state-bucket-gvil"
     key            = "website/terraform.tfstate"
@@ -6,4 +6,3 @@
     dynamodb_table = "terraform_state_locks"
   }
 }
-*/
