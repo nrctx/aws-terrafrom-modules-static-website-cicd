@@ -43,3 +43,8 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -lock=false
+        
+      - name: Sync Website Files to S3
+        run: |
+          aws s3 sync ./website s3://giovcloud.xyz --delete
+        
