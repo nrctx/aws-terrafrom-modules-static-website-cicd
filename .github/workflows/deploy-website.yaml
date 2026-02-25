@@ -23,6 +23,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Package Lambda
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend
+          zip -r ../lambda_function_payload.zip index.py
+          cd ..
+
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
         with:

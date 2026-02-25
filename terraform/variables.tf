@@ -7,3 +7,7 @@ variable "website_bucket" {}
 variable "force_destroy" {}
 variable "versioning_enabled" {}
 variable "index_document" {}
+variable "admin_email" {}
+variable "lambda_zip_path" {}
+variable "lambda_payload_filename" {}
+variable "contact_api_stage" {}

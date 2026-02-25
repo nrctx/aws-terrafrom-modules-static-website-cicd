@@ -22,3 +22,8 @@ output "cloudfront_distribution_id" {
     description = "The ID of the CloudFront distribution"
     value = module.cloudfront.cloudfront_distribution_id
 }
+
+output "contact_api_url" {
+  description = "The endpoint URL for the contact form"
+  value       = module.contact_backend.api_endpoint
+}

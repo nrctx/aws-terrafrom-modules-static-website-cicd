@@ -41,3 +41,14 @@ module "cloudfront" {
   index_document                                               = module.s3_website.index_document
   root_domain                                                  = module.dns_acm.root_domain
 }
+
+module "contact_backend" {
+  source                                                       = "./modules/contact_backend"
+  admin_email                                                  = var.admin_email
+  lambda_zip_path                                              = "${path.root}/${var.lambda_payload_filename}"
+}
+
+# This will print the URL to your screen after deployment
+output "contact_api_url" {
+  value = module.contact_backend.api_endpoint
+}

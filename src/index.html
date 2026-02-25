@@ -298,6 +298,59 @@
       }
     });
   });
+
+  //Contact form submission handler
+  document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.querySelector('.contact-form');
+    const sendBtn = document.querySelector('.btn-send');
+
+    // PASTE YOUR OUTPUT URL HERE after running 'terraform apply'
+    const API_ENDPOINT = "https://your-api-id.execute-api.us-east-1.amazonaws.com/contact";
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // 1. Visual feedback for the user
+        const originalBtnText = sendBtn.innerText;
+        sendBtn.innerText = "Sending...";
+        sendBtn.disabled = true;
+
+        // 2. Map the form fields to our Python backend keys
+        const payload = {
+            name: contactForm.querySelector('input[placeholder="Your Name"]').value,
+            email: contactForm.querySelector('input[placeholder="Your Email"]').value,
+            subject: contactForm.querySelector('input[placeholder="Subject"]').value,
+            message: contactForm.querySelector('textarea').value
+        };
+
+        try {
+            // 3. Send the POST request to AWS
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert("Message sent successfully! I'll get back to you soon.");
+                contactForm.reset();
+            } else {
+                const errorData = await response.json();
+                console.error("Server Error:", errorData);
+                alert("Failed to send message. Please try again later.");
+            }
+        } catch (error) {
+            console.error("Network Error:", error);
+            alert("Connection error. Check your internet or CORS settings.");
+        } finally {
+            // 4. Reset button state
+            sendBtn.innerText = originalBtnText;
+            sendBtn.disabled = false;
+        }
+    });
+});
 </script>
 
 </body>
