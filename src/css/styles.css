@@ -732,6 +732,16 @@ Scrollbar
   .btn-send {
     width: 100%; /* Full width button for easier tapping */
   }
+
+  .wraper {
+        /* Mobile styles */
+        width: 250px; /* Or a suitable mobile width */
+        position: fixed; /* If it's a sidebar */
+        top: 0;
+        left: 0;
+        height: 100vh;
+        /* ... other mobile specific styles ... */
+    }
 }
 
 /* Tablet adjustments */
@@ -742,4 +752,5 @@ Scrollbar
   .portfolio-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
 }
