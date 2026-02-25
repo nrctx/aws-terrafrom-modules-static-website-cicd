@@ -11,6 +11,11 @@ provider "aws" {
   region = var.region
 }
 
+provider "aws" {
+  alias  = "us_east_1"
+  region = var.region_cloudfront
+}
+
 module "backend" {
   source                                                       = "./modules/remote_backend"
   iam_user_name                                                = var.iam_user_name
@@ -20,6 +25,7 @@ module "backend" {
 
 module "dns_acm" {
   source                                                       = "./modules/route53_acm"
+  providers                                                    = {aws = aws.us_east_1}
   root_domain                                                  = var.root_domain
   dns_record_ttl                                               = var.dns_record_ttl
 }

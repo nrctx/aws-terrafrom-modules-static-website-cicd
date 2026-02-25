@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "website_distribution" {
     
     origin {
         domain_name = var.bucket_regional_domain_name
-        origin_id = "origin-s3-${var.bucket_regional_domain_name}"
+        origin_id = "origin-s3-${var.s3_bucket_id}"
         origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_s3_oac.id
     }
 

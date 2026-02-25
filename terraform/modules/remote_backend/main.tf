@@ -70,7 +70,7 @@ resource "aws_dynamodb_table" "state_lock_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
