@@ -1,6 +1,7 @@
 output "api_endpoint" {
   description = "The URL of the API Gateway. Paste this into your website's JavaScript fetch call."
-  value       = "${aws_api_gateway_deployment.contact_api_deployment.invoke_url}/contact"
+  # We pull the invoke_url directly from the Stage resource
+  value       = "${aws_apigatewayv2_stage.default.invoke_url}/contact"
 }
 
 output "lambda_function_arn" {
