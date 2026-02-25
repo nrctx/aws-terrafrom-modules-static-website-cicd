@@ -635,3 +635,111 @@ Scrollbar
 .btn-send:hover {
   opacity: 0.7;
 }
+/*===========================================
+14. Mobile Responsiveness
+============================================*/
+
+@media screen and (max-width: 768px) {
+  /* Allow the page to scroll naturally on mobile */
+  body {
+    overflow: auto;
+    font-size: 16px; /* Larger base font for better legibility on touch */
+  }
+
+  /* Stack the layout vertically */
+  .container {
+    flex-direction: column;
+  }
+
+  /* Sidebar resets */
+  .left-content {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.38);
+    padding: 20px;
+    position: relative;
+  }
+
+  /* Adjust Logo and Nav for mobile */
+  .logo {
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .logo a {
+    text-align: center;
+    align-items: center;
+  }
+
+  .nav {
+    margin: 20px 0;
+  }
+  .nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  .nav ul li, .nav ul li a {
+    justify-content: center;
+    padding: 5px;
+  }
+
+  /* Main Content Area */
+  .main-content {
+    margin-left: 0;
+    border-left: none;
+    padding: 15px;
+  }
+
+  /* Section-specific Grid Collapsing */
+  .about-grid, 
+  .contact-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* Adjust Home Section padding */
+  .user-profile {
+    padding-left: 0;
+    text-align: center;
+  }
+  
+  .social-icons-head ul {
+    justify-content: center;
+  }
+
+  /* Portfolio Grid: Ensure items take more space on small screens */
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* Single column on phones */
+  }
+
+  /* Left Footer alignment */
+  .left-footer, 
+  .foot-contact, 
+  .social-icons ul, 
+  .copy-rights {
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .social-icons ul {
+    margin-bottom: 10px;
+  }
+
+  /* Form spacing */
+  .btn-send {
+    width: 100%; /* Full width button for easier tapping */
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .left-content {
+    width: 240px;
+  }
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
