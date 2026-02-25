@@ -1,9 +1,8 @@
- /*terraform {
+terraform {
  backend "s3" {
-    bucket         = "terraform-state-bucket-gvil"
+    bucket         = "terraform-state-bucket-gvil-022526"
     key            = "website/terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "terraform_state_locks"
+    region         = "us-east-1"
+    use_lockfile = true
   }
 }
-*/
