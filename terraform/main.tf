@@ -45,5 +45,6 @@ module "cloudfront" {
 module "contact_backend" {
   source                                                       = "./modules/contact_backend"
   admin_email                                                  = var.admin_email
-  lambda_zip_path                                              = "${path.root}/${var.lambda_payload_filename}"
+  lambda_zip_path                                              = "${path.root}/../${var.lambda_payload_filename}"
+  contact_api_stage                                            = var.contact_api_stage
 }

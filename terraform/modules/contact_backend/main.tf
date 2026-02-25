@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_route" "contact_route" {
 
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.contact_api.id
-  name        = "$default"
+  name        = var.contact_api_stage  # <--- Use the variable here
   auto_deploy = true
 }
 

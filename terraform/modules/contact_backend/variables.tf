@@ -7,3 +7,8 @@ variable "lambda_zip_path" {
   description = "The local path to the zipped Python backend code."
   type        = string
 }
+variable "contact_api_stage" {
+  description = "The name of the API stage"
+  type        = string
+  default     = "$default"
+}
