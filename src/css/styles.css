@@ -640,25 +640,27 @@ Scrollbar
 ============================================*/
 
 @media screen and (max-width: 768px) {
-  /* Allow the page to scroll naturally on mobile */
   body {
-    overflow: auto;
-    font-size: 16px; /* Larger base font for better legibility on touch */
+    overflow: visible !important; /* Changed from auto to visible */
+    height: auto;                 /* Allow height to grow with content */
+    font-size: 16px;
   }
 
-  /* Stack the layout vertically */
-  .container {
-    flex-direction: column;
+  /* Add/Update the container and wraper */
+  .wraper, .container {
+    height: auto;     /* Remove the 100% height lock */
+    display: block;   /* Stack sidebar and main content vertically */
   }
 
-  /* Sidebar resets */
   .left-content {
     width: 100%;
-    height: auto;
+    height: auto;           /* Let it grow based on nav items */
+    overflow: visible;      /* Remove internal scrollbar */
     border-right: none;
     border-bottom: 1px solid rgba(221, 221, 221, 0.38);
     padding: 20px;
     position: relative;
+    display: block;         /* Ensure it follows standard document flow */
   }
 
   /* Adjust Logo and Nav for mobile */
@@ -686,10 +688,13 @@ Scrollbar
   }
 
   /* Main Content Area */
+ /* Update line 598-602 */
   .main-content {
     margin-left: 0;
     border-left: none;
     padding: 15px;
+    overflow: visible;      /* Allow content to push the page down */
+    height: auto;           /* Remove the flex-locked height */
   }
 
   /* Section-specific Grid Collapsing */
