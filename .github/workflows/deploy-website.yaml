@@ -46,5 +46,5 @@ jobs:
         
       - name: Sync Website Files to S3
         run: |
-          aws s3 sync ./website s3://giovcloud.xyz --delete
+          aws s3 sync ./aws-terrafrom-modules-static-website-cicd s3://giovcloud.xyz --delete
         
