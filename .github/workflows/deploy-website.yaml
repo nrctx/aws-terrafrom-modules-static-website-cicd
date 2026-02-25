@@ -44,7 +44,10 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -lock=false
         
-      - name: Sync Website Files to S3
+      - name: Deploy Website Files
         run: |
-          aws s3 sync ./aws-terrafrom-modules-static-website-cicd s3://giovcloud.xyz --delete
-        
+          aws s3 sync ${{ github.workspace }}/src s3://giovcloud.xyz --delete
+      
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id E2TOEN7EH7SR6C --paths "/*"
