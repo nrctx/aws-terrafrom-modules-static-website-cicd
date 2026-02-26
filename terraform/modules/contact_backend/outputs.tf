@@ -8,3 +8,7 @@ output "lambda_function_arn" {
   description = "The ARN of the Lambda function (useful for debugging or logging)."
   value       = aws_lambda_function.contact_lambda.arn
 }
+
+output "dkim_tokens" {
+  value = aws_ses_domain_dkim.main.dkim_tokens
+}

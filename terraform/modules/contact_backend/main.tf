@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_route" "contact_route" {
 
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.contact_api.id
-  name        = var.contact_api_stage  # <--- Use the variable here
+  name        = var.contact_api_stage 
   auto_deploy = true
 }
 
@@ -76,4 +76,14 @@ resource "aws_lambda_permission" "api_gw" {
   function_name = aws_lambda_function.contact_lambda.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.contact_api.execution_arn}/*/*"
+}
+
+# This creates the SES Domain Identity
+resource "aws_ses_domain_identity" "main" {
+  domain = var.domain_name
+}
+
+# This generates the 3 DKIM tokens (CNAME values)
+resource "aws_ses_domain_dkim" "main" {
+  domain = aws_ses_domain_identity.main.domain
 }

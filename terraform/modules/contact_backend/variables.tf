@@ -12,3 +12,8 @@ variable "contact_api_stage" {
   type        = string
   default     = "$default"
 }
+
+variable "domain_name" {
+  type        = string
+  description = "The domain name for SES (e.g., giovcloud.xyz)"
+}

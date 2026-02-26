@@ -41,10 +41,17 @@ module "cloudfront" {
   index_document                                               = module.s3_website.index_document
   root_domain                                                  = module.dns_acm.root_domain
 }
-
 module "contact_backend" {
-  source                                                       = "./modules/contact_backend"
-  admin_email                                                  = var.admin_email
-  lambda_zip_path                                              = "${path.root}/../${var.lambda_payload_filename}"
-  contact_api_stage                                            = var.contact_api_stage
+  source            = "./modules/contact_backend"
+  domain_name       = "giovcloud.xyz"  # Pass the domain here
+  admin_email       = var.admin_email
+  lambda_zip_path   = "${path.root}/../${var.lambda_payload_filename}"
+  contact_api_stage = var.contact_api_stage
+}
+
+module "dns_security" {
+  source      = "./modules/dns"
+  domain_name = "giovcloud.xyz"
+  admin_email = var.admin_email
+  dkim_tokens = module.contact_backend.dkim_tokens # Grabs the output from above
 }
