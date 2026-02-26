@@ -112,7 +112,7 @@ The project utilizes a completely serverless architecture to ensure 99.9% availa
                 main.tf
                 outputs.tf
                 variables.tf
-  <details>
+</details>
 
 🤖 CI/CD Pipeline
 
