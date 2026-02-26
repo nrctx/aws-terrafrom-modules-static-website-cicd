@@ -3,6 +3,7 @@
 Serverless Cloud Portfolio
 
 A high-performance, cost-effective static website hosted on AWS, featuring a serverless backend for contact form processing. This project demonstrates modern DevOps practices, including Infrastructure as Code (Terraform), CI/CD (GitHub Actions), and Cloud Security (SPF/DKIM/DMARC).
+
 🚀 Live Demo URL: https://giovcloud.xyz
 
 
