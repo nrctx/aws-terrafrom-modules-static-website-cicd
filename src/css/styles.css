@@ -748,3 +748,28 @@ Scrollbar
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/*===========================================
+15. Project Link Styles
+============================================*/
+.project-link {
+  text-decoration: none;
+  color: inherit; /* Keeps text color from turning blue */
+  display: block;
+}
+
+.project-link:hover .portfolio-card {
+  border-color: #000; /* Darkens border on hover */
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+/* Ensures the icon in the thumb looks consistent */
+.project-link .card-thumb i {
+  transition: transform 0.3s ease;
+}
+
+.project-link:hover .card-thumb i {
+  transform: scale(1.1);
+  color: #000;
+}
