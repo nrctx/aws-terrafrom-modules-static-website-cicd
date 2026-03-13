@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marlon Viloria | Cloud Engineer </title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://fonts.googleapis.com; font-src https://stackpath.bootstrapcdn.com https://fonts.gstatic.com; img-src 'self' data:; connect-src https://r3ljr0caad.execute-api.us-east-1.amazonaws.com;">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xUxasSl/G9lsaqtE4Y6JNe0iyM2bpTQv" crossorigin="anonymous">
 </head>
 <body>
 
@@ -32,14 +33,13 @@
           <li><a href="#Contact">Contact</a></li>
         </ul>
         <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">
-          <i class="fa fa-moon-o" id="darkIcon"></i>
+          <span id="darkIcon">&#9790;</span>
         </button>
       </div>
 
       <div class="left-footer">
         <div class="social-icons">
           <ul>
-            <li><a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin-square"></i></a></li>
             <li><a href="https://github.com/nrctx" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa fa-github"></i></a></li>
           </ul>
         </div>
@@ -85,7 +85,6 @@
             </div>
             <div class="social-icons-head">
               <ul>
-                <li><a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin-square"></i></a></li>
                 <li><a href="https://github.com/nrctx" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa fa-github"></i></a></li>
               </ul>
             </div>
@@ -314,17 +313,14 @@
               <i class="fa fa-phone"></i>
               <div><strong>Phone</strong>(224) 578-6912</div>
             </div>
-            <div class="contact-item">
-              <i class="fa fa-linkedin-square"></i>
-              <div><strong>LinkedIn</strong>linkedin.com/in/marlonviloria</div>
-            </div>
           </div>
           <div class="contact-form-wrap">
             <form class="contact-form" onsubmit="return false;">
-              <input type="text" placeholder="Your Name" aria-label="Your Name">
-              <input type="email" placeholder="Your Email" aria-label="Your Email">
-              <input type="text" placeholder="Subject" aria-label="Subject">
-              <textarea placeholder="Your Message" aria-label="Your Message"></textarea>
+              <input type="text" placeholder="Your Name" aria-label="Your Name" maxlength="100">
+              <input type="email" placeholder="Your Email" aria-label="Your Email" maxlength="254">
+              <input type="text" placeholder="Subject" aria-label="Subject" maxlength="200">
+              <textarea placeholder="Your Message" aria-label="Your Message" maxlength="2000"></textarea>
+              <div id="formStatus" class="form-status" role="alert"></div>
               <button class="btn-send" type="submit">Send Message</button>
             </form>
           </div>
@@ -344,7 +340,7 @@
 
   function applyDark(isDark) {
     document.body.classList.toggle('dark', isDark);
-    darkIcon.className = isDark ? 'fa fa-sun-o' : 'fa fa-moon-o';
+    darkIcon.textContent = isDark ? '\u2600' : '\u263E';
   }
 
   applyDark(localStorage.getItem('darkMode') === 'true');
@@ -375,58 +371,63 @@
     });
   });
 
-  //Contact form submission handler
+  // Contact form submission handler
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');
     const sendBtn = document.querySelector('.btn-send');
+    const formStatus = document.getElementById('formStatus');
 
-    // PASTE YOUR OUTPUT URL HERE after running 'terraform apply'
     const API_ENDPOINT = "https://r3ljr0caad.execute-api.us-east-1.amazonaws.com/contact";
+
+    function setStatus(msg, type) {
+      formStatus.textContent = msg;
+      formStatus.className = 'form-status ' + type;
+    }
 
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 1. Visual feedback for the user
+        const name    = contactForm.querySelector('input[placeholder="Your Name"]').value.trim();
+        const email   = contactForm.querySelector('input[placeholder="Your Email"]').value.trim();
+        const subject = contactForm.querySelector('input[placeholder="Subject"]').value.trim();
+        const message = contactForm.querySelector('textarea').value.trim();
+
+        // Client-side validation
+        if (!name)    { setStatus('Please enter your name.', 'error'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setStatus('Please enter a valid email address.', 'error'); return;
+        }
+        if (!message) { setStatus('Please enter a message.', 'error'); return; }
+
         const originalBtnText = sendBtn.innerText;
         sendBtn.innerText = "Sending...";
         sendBtn.disabled = true;
-
-        // 2. Map the form fields to our Python backend keys
-        const payload = {
-            name: contactForm.querySelector('input[placeholder="Your Name"]').value,
-            email: contactForm.querySelector('input[placeholder="Your Email"]').value,
-            subject: contactForm.querySelector('input[placeholder="Subject"]').value,
-            message: contactForm.querySelector('textarea').value
-        };
+        setStatus('', '');
 
         try {
-            // 3. Send the POST request to AWS
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message })
             });
 
             if (response.ok) {
-                alert("Message sent successfully! I'll get back to you soon.");
+                setStatus("Message sent! I'll get back to you soon.", 'success');
                 contactForm.reset();
             } else {
                 const errorData = await response.json();
                 console.error("Server Error:", errorData);
-                alert("Failed to send message. Please try again later.");
+                setStatus('Failed to send message. Please try again later.', 'error');
             }
         } catch (error) {
             console.error("Network Error:", error);
-            alert("Connection error. Check your internet or CORS settings.");
+            setStatus('Connection error. Please check your internet and try again.', 'error');
         } finally {
-            // 4. Reset button state
             sendBtn.innerText = originalBtnText;
             sendBtn.disabled = false;
         }
     });
-});
+  });
 </script>
 
 </body>
