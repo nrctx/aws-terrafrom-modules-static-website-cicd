@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "lambda_ses_policy" {
       {
         Effect   = "Allow"
         Action   = ["ses:SendEmail", "ses:SendRawEmail"]
-        Resource = "*"
+        Resource = "arn:aws:ses:*:*:identity/${var.domain_name}"
       },
       {
         Effect   = "Allow"
@@ -46,7 +46,7 @@ resource "aws_apigatewayv2_api" "contact_api" {
   name          = "contact-form-api"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = ["*"]
+    allow_origins = ["https://${var.domain_name}"]
     allow_methods = ["POST", "OPTIONS"]
     allow_headers = ["content-type"]
   }
@@ -66,8 +66,13 @@ resource "aws_apigatewayv2_route" "contact_route" {
 
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.contact_api.id
-  name        = var.contact_api_stage 
+  name        = var.contact_api_stage
   auto_deploy = true
+
+  default_route_settings {
+    throttling_rate_limit  = 5
+    throttling_burst_limit = 10
+  }
 }
 
 resource "aws_lambda_permission" "api_gw" {
