@@ -4,10 +4,10 @@ Serverless Cloud Portfolio
 
 A high-performance, cost-effective static website hosted on AWS, featuring a serverless backend for contact form processing. This project demonstrates modern DevOps practices, including Infrastructure as Code (Terraform), CI/CD (GitHub Actions), and Cloud Security (SPF/DKIM/DMARC).
 
-🚀 Live Demo URL: https://giovcloud.xyz
+Live Demo URL: https://giovcloud.xyz
 
 
-🏗️ Architecture
+ Architecture
 
 The project utilizes a completely serverless architecture to ensure 99.9% availability with near-zero monthly costs.
 
@@ -23,7 +23,7 @@ The project utilizes a completely serverless architecture to ensure 99.9% availa
 
     Email: Amazon SES for reliable delivery with SPF/DKIM/DMARC authentication.
 
-🛠️ Tech Stack & Tools
+Tech Stack & Tools
 
     IaC: Terraform (Modularized)
 
@@ -35,9 +35,9 @@ The project utilizes a completely serverless architecture to ensure 99.9% availa
 
     Security: IAM Least Privilege, SSL/TLS, DNSSEC, SES Domain Identity
 
-📂 Project Structure
+Project Structure
 <details>
-<summary>📂 Click to view Project Structure</summary>
+<summary> Click to view Project Structure</summary>
 .
 │   .gitignore
 │   README.md
@@ -115,7 +115,7 @@ The project utilizes a completely serverless architecture to ensure 99.9% availa
                 variables.tf
 </details>
 
-🤖 CI/CD Pipeline
+CI/CD Pipeline
 
 The project features a fully automated deployment pipeline. On every push to the main branch, GitHub Actions:
 
@@ -127,7 +127,7 @@ The project features a fully automated deployment pipeline. On every push to the
 
     Invalidates the CloudFront cache to ensure immediate global updates.
 
-🛡️ Email Security & Deliverability
+Email Security & Deliverability
 
 To ensure contact form messages never hit the spam folder, the following DNS security protocols are implemented via Terraform:
 
@@ -145,6 +145,3 @@ Future Roadmap
 
     [ ] Transition to Terraform Workspaces for Dev/Prod environment isolation.
 
-Author: Marlon G. Viloria
-
-Contact: marlon.g.viloria@gmail.com
